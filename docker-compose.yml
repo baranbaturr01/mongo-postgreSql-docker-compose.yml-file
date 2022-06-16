@@ -1,0 +1,40 @@
+version: '3.2'
+services:
+  mongodb:
+    container_name: mongodb
+    image: mongo:4
+    volumes:
+      - mongodb:/data/db
+    ports:
+      - 30020:27017
+    environment:
+      MONGO_SU_USERNAME:
+      MONGO_USERNAME:
+      MONGO_DATABASE:
+      SECRET_NAME:
+    networks:
+      - mongodb-backend
+
+  postgres:
+    container_name: postgres-nodejs
+    image: postgres:9.6
+    restart: always
+    volumes:
+      - postgres:/data/postgresql
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USERNAME: 'admin'
+      POSTGRES_PASSWORD: 'password'
+      POSTGRES_DATABASE: 'database'
+
+    networks:
+      - postgres-backend
+
+volumes:
+  mongodb:
+  postgres:
+
+networks:
+  mongodb-backend:
+  postgres-backend:
